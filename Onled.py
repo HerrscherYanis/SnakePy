@@ -18,8 +18,11 @@ def Grass():
     return (mapsint,None,(0, 1, 0))
 
 
-def AppleRan():
-    return (1,random.randint(0, mapsint-1),(2,0,0))
+def AppleRan(sn):
+    while True:
+        apple=random.randint(0, mapsint-1)
+        if(apple!=sn):
+            return (1,apple,(2,0,0))
 
 def Move(dir):
     time.sleep(0.1)
@@ -36,8 +39,8 @@ def Move(dir):
 
 def Snake(dir, sn):
     u=(56,57,58,59,60,61,62,63)
-    r=(0,15,16,31,32,47,48,63)
-    l=(7,8,23,24,39,40,55,56)
+    r=(0,8,16,24,32,40,48,56)
+    l=(7,15,23,31,39,47,55,63)
     d=(0,1,2,3,4,5,6,7)
     
     if(dir=="up"):
@@ -58,17 +61,18 @@ def Snake(dir, sn):
         return sn+1
     else:
         return sn
-def Start():
-    sn = (1,27,(0,1,2))
-    Pri(Grass())
-    Pri(AppleRan())
-    Pri(sn)
-    return sn
     
+def Start(sn):
+    Pri(Grass())
+    Pri(sn)
+
 print("run")
-sn = list(Start())
+sn = list((1,27,(0,1,2)))
+Pri(AppleRan(sn[1]))
 dir="right"
+
 while True:
+    Start(sn)
     dir = Move(dir)
     sn[1] = Snake(dir, sn[1])
     print(sn[1])
