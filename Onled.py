@@ -47,16 +47,17 @@ def Snake(dir, sn):
         print("Wip")
         return sn
     elif(dir=="right"):
-        for t in r-1:
+        for t in range(8):
             if(sn==r[t]):
                 return l[t]
         return sn-1
     elif(dir=="left"):
-        print("Wip")
-        return sn 
+        for t in range(8):
+            if(sn==l[t]):
+                return r[t]
+        return sn+1
     else:
         return sn
-    
 def Start():
     sn = (1,27,(0,1,2))
     Pri(Grass())
