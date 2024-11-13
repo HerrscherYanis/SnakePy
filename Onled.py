@@ -42,23 +42,36 @@ def Snake(dir, sn):
     r=(0,8,16,24,32,40,48,56)
     l=(7,15,23,31,39,47,55,63)
     d=(0,1,2,3,4,5,6,7)
+    relat=(15,31,47,63,79,95,101,63)
     
     if(dir=="up"):
-        print("Wip")
-        return sn
+        for t in range(8):
+            if(sn==u[t]):
+                return d[t]
+        for t in range(8):
+            if(sn>=r[t] and sn<=l[t]):
+                return relat[t]-sn
+            
     elif(dir=="down"):
-        print("Wip")
-        return sn
+        for t in range(8):
+            if(sn==d[t]):
+              return u[t]
+        for t in range(8):
+            if(sn>=r[t] and sn<=l[t]):
+                return relat[t-1]-sn
+            
     elif(dir=="right"):
         for t in range(8):
             if(sn==r[t]):
                 return l[t]
         return sn-1
+    
     elif(dir=="left"):
         for t in range(8):
             if(sn==l[t]):
                 return r[t]
         return sn+1
+    
     else:
         return sn
     
