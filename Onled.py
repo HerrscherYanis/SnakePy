@@ -14,18 +14,25 @@ def Pri(color):
         np[color[1]] = color[2]
     np.write()
     
-def Grass():
-    return (mapsint,None,(0, 1, 0))
+def Element():
+    grass = list((mapsint,None,(0, 1, 0)))
+    sn = list((1,27,(0,1,2)))
+    apple = list((1,AppleRan(sn, None),(2,0,0)))
+    print(apple)
+    return apple,grass,sn
 
 
-def AppleRan(sn):
+def AppleRan(sn, appleco):
     while True:
         apple=random.randint(0, mapsint-1)
         if(apple!=sn):
-            return (1,apple,(2,0,0))
+            if(appleco == None):
+                return apple
+            else:
+                appleco[1] = apple
+                return appleco 
 
 def Move(dir):
-    time.sleep(0.1)
     if(up.value()==0):
         return "up"
     elif(down.value()==0):
@@ -42,50 +49,78 @@ def Snake(dir, sn):
     r=(0,8,16,24,32,40,48,56)
     l=(7,15,23,31,39,47,55,63)
     d=(0,1,2,3,4,5,6,7)
-    relat=(15,31,47,63,79,95,101,63)
+    relat=(63,15,31,47,63,79,95,111)
     
     if(dir=="up"):
         for t in range(8):
-            if(sn==u[t]):
-                return d[t]
-        for t in range(8):
-            if(sn>=r[t] and sn<=l[t]):
+            if(sn>= r[t-1] and sn<= l[t-1]):
                 return relat[t]-sn
             
     elif(dir=="down"):
         for t in range(8):
-            if(sn==d[t]):
-              return u[t]
-        for t in range(8):
-            if(sn>=r[t] and sn<=l[t]):
+            if(sn>=r[t-1] and sn<=l[t-1]):
                 return relat[t-1]-sn
             
     elif(dir=="right"):
         for t in range(8):
-            if(sn==r[t]):
-                return l[t]
-        return sn-1
+            if(sn>=r[t-1] and sn<=l[t-1]):
+                print(t%2)
+                if(t%2==0):
+                    for t in range(8):
+                        if(sn==r[t]):
+                            return l[t]
+                    return sn-1
+                else:
+                    for t in range(8):
+                        if(sn==l[t]):
+                            return r[t]
+                    return sn+1                    
     
     elif(dir=="left"):
         for t in range(8):
-            if(sn==l[t]):
-                return r[t]
-        return sn+1
+            if(sn>=r[t-1] and sn<=l[t-1]):
+                print(t%2)
+                if(t%2==0):
+                    for t in range(8):
+                        if(sn==l[t]):
+                            return r[t]
+                    return sn+1
+                else:
+                    for t in range(8):
+                        if(sn==r[t]):
+                            return l[t]
+                    return sn-1 
     
     else:
         return sn
     
-def Start(sn):
-    Pri(Grass())
+def Lesn(sn, snize,grass):
+    snize.append(sn[1])
+    if(len(snize) > sn[0]):
+        Pri(list((1,snize[0],grass[2])))
+        snize.pop(0)
     Pri(sn)
 
+def Start(apple,grass,sn):
+    Pri(grass)
+    Pri(apple)
+    Pri(sn)
+    
+def Eat(sn,apple):
+    if(apple[1]==sn[1]):
+        apple = AppleRan(sn, apple)
+        sn[0] = sn[0]+1
+        Pri(apple)
+    
 print("run")
-sn = list((1,27,(0,1,2)))
-Pri(AppleRan(sn[1]))
+apple, grass, sn = Element()
+Start(apple,grass,sn)
 dir="right"
-
+snize =[sn[1]]
 while True:
-    Start(sn)
+    time.sleep(0.1)
+    Eat(sn,apple)
+    Lesn(sn,snize,grass)
     dir = Move(dir)
     sn[1] = Snake(dir, sn[1])
     print(sn[1])
