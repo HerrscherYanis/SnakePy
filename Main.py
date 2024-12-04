@@ -34,13 +34,25 @@ def AppleRan(sn, appleco):
 
 def Move(dir):
     if(up.value()==0):
-        return "up"
+        if(dir=="down"):
+            return dir
+        else:
+            return "up"
     elif(down.value()==0):
-        return "down"
+        if(dir=="up"):
+            return dir
+        else:
+            return "down"
     elif(left.value()==0):
-        return "left"
+        if(dir=="right"):
+            return dir
+        else:
+            return "left"
     elif(right.value()==0):
-        return "right"
+        if(dir=="left"):
+            return dir
+        else:
+            return "right"
     else:
         return dir
 
@@ -94,7 +106,7 @@ def Snake(dir, sn):
     else:
         return sn
     
-def Lesn(sn, snize,grass):
+def Lesn(sn,snize,grass):
     snize.append(sn[1])
     if(len(snize) > sn[0]):
         Pri(list((1,snize[0],grass[2])))
@@ -111,16 +123,30 @@ def Eat(sn,apple):
         apple = AppleRan(sn, apple)
         sn[0] = sn[0]+1
         Pri(apple)
-    
+
+def Lose(snize, sn):
+    for t in range(sn[0]):
+        if(snize[t] == sn[1]):
+            return True
+
+def GameOver():
+    Pri(list((mapsint,None,(0, 1, 0))))
+    time.sleep(1)
+    Pri(list((mapsint,None,(1, 1, 0))))
+
+def Start():
+    apple, grass, sn = Element()
+    Start(apple,grass,sn)
+    dir="right"
+    snize =[sn[1]]
+    while True:
+        time.sleep(0.1)
+        Eat(sn,apple)
+        Lesn(sn,snize,grass)
+        dir = Move(dir)
+        sn[1] = Snake(dir, sn[1])
+        print(sn[1])
+        if(Lose(snize, sn)==True):
+            break
 print("run")
-apple, grass, sn = Element()
-Start(apple,grass,sn)
-dir="right"
-snize =[sn[1]]
-while True:
-    time.sleep(0.1)
-    Eat(sn,apple)
-    Lesn(sn,snize,grass)
-    dir = Move(dir)
-    sn[1] = Snake(dir, sn[1])
-    print(sn[1])
+GameOver()
