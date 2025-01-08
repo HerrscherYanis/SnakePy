@@ -10,13 +10,21 @@ class Button:
         Direct = depend.machine.Pin(self.pinButton, depend.machine.Pin.IN, depend.machine.Pin.PULL_UP)
 
 
-class :
-    def __init__(self, number, position, color):
+class Grass:
+    def __init__(self, number, color):
+        self.number = number 
+        self.color = color
+
+class Apple:
+    def __init__(self, number, position, color,score):
         self.number = number 
         self.position = position
         self.color = color
+        self.score = score
 
-
-
-    sn = list((1,27,(0,1,2),0))
-    apple = list((1,AppleRan(sn, None),(2,0,0),"ordinary"))
+class Snake:
+    def __init__(self, number, position, color,quality):
+        self.number = number 
+        self.position = position
+        self.color = color
+        self.quality = quality
