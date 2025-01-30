@@ -9,8 +9,9 @@ def Element():
     left = Button(6)
     right = Button(7)
     #Def Game
-    grass = Grass(matrice.mapsint,(0, 1, 0))
-    sn = Snake(1,27,(0,1,2),0)
-    apple = Apple(1,AppleRan(sn, None),(2,0,0),"ordinary")
-    print(apple)
-    return apple,grass,sn
+    grass = Grass(matrice)
+    grass.Pri()
+    sn = Snake(matrice)
+    apple = Apple(matrice, sn)
+    
+Element()

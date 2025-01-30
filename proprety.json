@@ -1,0 +1,7 @@
+{"ordinary" : {"color" : [2,0,0], "score" : 1, "size" : 1},
+"golden" : {"color" : [2,2,0], "score" : 5, "size" : 1},
+"poisoned" : {"color" : [2,2,3], "score" : -5, "size" : 0},
+"laxative" : {"color" : [2,1,2], "score" : 0, "size" : -1},
+"hiden" : {"color" : [0,3,0], "score" : 10, "size" : 1},
+"evil" : {"color" : [0,0,0], "score" : -666, "size" : -10},
+"angel" : {"color" : [0,0,0], "score" : 999, "size" : 0}}
