@@ -1,76 +1,9 @@
 import depend
+from Component_file import Printing
 
-class Matrice:
-    def __init__(self, pinMap):
-        self.mapsint = 64
-        self.np = depend.neopixel.NeoPixel(depend.machine.Pin(pinMap), self.mapsint)
-    def Pri(self, Class_Obj, color = None):
-        if(color == None):
-            color = Class_Obj.color
-        try:
-            self.np[Class_Obj.position] = color
-        except:
-            for i in range(Class_Obj.number):
-                self.np[i] = color
-        self.np.write()
-
-class Button:
-    def __init__(self, pinButton):
-        self.value = depend.machine.Pin(pinButton, depend.machine.Pin.IN, depend.machine.Pin.PULL_UP)
-
-class Grass():
-    def __init__(self, Matrice):
-        self.Matrice = Matrice
-        self.number = Matrice.mapsint
-        self.color = (0, 1, 0)
-    def Pri(self):
-        self.Matrice.Pri(self)
-
-
-class Apple():
-    def __init__(self, Matrice, snake):
-        self.Matrice = Matrice
-        self.quality = "ordinary"
-        self.number = 1
-        self.color = None
-        self.score = 0
-        self.size = 0
-        self.timer = 0
-        self.data = depend.json.load(open('proprety.json'))   
-        self.position = self.AppleRan(snake, self.quality)    
-    def AppleRan(self, snake, apple_quality = None):
-        if(apple_quality == None):
-            get_proprety = depend.random.choice(list(self.data.items()))
-        else:
-            get_proprety = [apple_quality,self.data[apple_quality]]
-        self.quality = get_proprety[0]
-        self.color = get_proprety[1]["color"]
-        self.score = get_proprety[1]["score"]
-        self.size = get_proprety[1]["size"]
-        apple_position = depend.random.randint(0, self.Matrice.mapsint-1)
-        rule = False
-        for position in snake.position :
-            if(apple_position == position):
-                rule = True
-        if(rule == True):
-            AppleRan(sn)
-        else:
-            self.position = apple_position
-            self.Matrice.Pri(self)
-    def deathpown(self,grass,sn):
-        self.timer = self.timer+1
-        if(self.timer>20 and self.timer < 30):
-            Matrice.Pri(self)
-            depend.time.sleep(0.1)
-            Matrice.Pri((self, (0, 1, 0)))
-        elif(self.timer>30):
-            self.timer = 0
-            self.AppleRan(sn, apple)
-            Matrice.Pri(self)
-    def Pri(self):
-        self.Matrice.Pri(self)
-class Snake():
+class Snake(Printing):
     def __init__(self, Matrice, up , down, right , left):
+        super().__init__(Matrice)
         self.Matrice = Matrice
         self.up = up
         self.down = down
@@ -90,7 +23,7 @@ class Snake():
                 return False
     def Eat(self, apple):
         if(apple.position==self.position[0]):
-            Effect(apple)
+            self.Effect(apple)
             apple.AppleRan(self)
     def Effect(self, apple):
         self.score += apple.score
@@ -161,6 +94,4 @@ class Snake():
                         for t in range(8):
                             if(self.position[0]==r[t]):
                                 self.position[0] = l[t]
-                        self.position[0]-1 
-    def Pri(self):
-        self.Matrice.Pri(self)       
+                        self.position[0]-1
