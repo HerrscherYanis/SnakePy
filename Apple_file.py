@@ -1,9 +1,8 @@
 import depend
 from Component_file import Printing
-
 class Apple(Printing):
-    def __init__(self, Matrice):
-        super().__init__(Matrice)
+    def __init__(self, Matrice, snake):
+        self.Matrice = Matrice
         self.quality = "ordinary"
         self.number = 1
         self.color = None
@@ -12,8 +11,9 @@ class Apple(Printing):
         self.timer = 0
         self.data = depend.json.load(open('proprety.json'))   
         self.position = 0
-        
-    def Random(self):
+        self.AppleRan(snake)
+        super().__init__(Matrice, self.color)
+    def AppleRan(self, snake):
         if(self.quality == None):
             get_proprety = depend.random.choice(list(self.data.items()))
         else:
@@ -23,25 +23,23 @@ class Apple(Printing):
         self.score = get_proprety[1]["score"]
         self.size = get_proprety[1]["size"]
         apple_position = depend.random.randint(0, self.Matrice.mapsint-1)
-        self.position = apple_position
-        
-    def Safe(self, snake):
         rule = False
+        self.quality = None
         for position in snake.position :
-            if(self.position == position):
+            if(apple_position == position):
                 rule = True
         if(rule == True):
-            self.Random()
+            self.AppleRan(snake)
         else:
-            self.quality = None
-        
-    def deathpown(self,grass):
+            self.position = apple_position
+            self.Pri()
+    def deathpown(self,grass,sn):
         self.timer = self.timer+1
         if(self.timer>20 and self.timer < 30):
-            self.Matrice.Pri(self)
+            self.Pri()
             depend.time.sleep(0.1)
-            self.Matrice.Pri(self, (0, 1, 0))
+            self.Pri(grass.color)
         elif(self.timer>30):
             self.timer = 0
-            self.Random()
-            self.Matrice.Pri(self)   
+            self.AppleRan(sn)
+            self.Pri()   
